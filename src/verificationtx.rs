@@ -1,10 +1,15 @@
-use crate::circuits::choice_index_space;
+use crate::circuits::{
+    choice_index_space, generate_bit_commitments, generate_bit_subsequent_commitments,
+    make_bristol_array, set_operations_array,
+};
 use crate::gate_templates::*;
 use crate::timelock::create_extra_leaf;
-
-use bitcoin::secp256k1::Secp256k1;
+use bitcoin::key::Keypair;
+use bitcoin::opcodes::all::OP_CHECKSIG;
+use bitcoin::secp256k1::{Secp256k1, SecretKey};
 use bitcoin::taproot::TaprootBuilder;
-use bitcoin::{secp256k1, Address, Network};
+use bitcoin::{script, secp256k1, Address, Network};
+use std::collections::HashMap;
 
 pub fn generate_verification_address(
     pubkey: secp256k1::XOnlyPublicKey,

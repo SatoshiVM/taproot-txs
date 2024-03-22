@@ -54,9 +54,11 @@ According to the Yellow Paper, next step is to take the parsed data and process 
 ![img_2.png](img_2.png)
 
 First, generate a corresponding random number preimage for each wire, then use sha256 to generate the preimage hash.
+
 ![img_1.png](img_1.png)
 
-use `generate_bit_commitments` and `generate_bit_commitments` separate out the preimagehashs and preimages.
+use `generate_bit_commitments` and `generate_bit_subsequent_commitments` separate out the preimagehashs and preimages.
 
 Then, using the operations_array and preimagehash data, along with script templates(`gate_templates.rs`), create all leaf scripts, then place them into taproot to generate a 2-input taproot transaction.
 
+![img_3.png](img_3.png)

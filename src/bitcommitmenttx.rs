@@ -96,6 +96,14 @@ pub fn template_last_script(xonlybubkey: secp256k1::XOnlyPublicKey) -> Vec<u8> {
 
 #[test]
 fn test_bit_commitment_tx() {
+    use crate::circuits::{
+        generate_bit_commitments, generate_bit_subsequent_commitments, make_bristol_array,
+        set_operations_array,
+    };
+    use std::collections::HashMap;
+    use bitcoin::key::Keypair;
+    use bitcoin::secp256k1::SecretKey;
+    
     let circuit = "4 7
 1 3
 1 1
