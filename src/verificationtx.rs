@@ -332,6 +332,7 @@ fn test_verification_tx() {
         &wire_settings,
         &mut initial_commitment_preimages,
         &mut initial_commitment_hashes,
+        vec![0, 2, 3],
     );
     println!(
         "initial_commitment_preimages {:?}",

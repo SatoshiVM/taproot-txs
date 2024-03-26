@@ -245,8 +245,9 @@ pub fn generate_bit_commitments(
     wire_settings: &HashMap<String, Vec<String>>,
     initial_commitment_preimages: &mut Vec<Vec<String>>,
     initial_commitment_hashes: &mut Vec<(String, String)>,
+    input_number: Vec<u8>,
 ) {
-    for i in 0..64 {
+    for i in input_number {
         let key = i.to_string();
         if let Some(preimages) = wire_settings.get(&key) {
             initial_commitment_preimages.push(preimages.clone());

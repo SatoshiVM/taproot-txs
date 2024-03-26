@@ -1,12 +1,17 @@
+use crate::circuits::{
+    generate_bit_commitments, generate_bit_subsequent_commitments, make_bristol_array,
+    set_operations_array,
+};
 use crate::timelock::create_extra_leaf;
-
+use bitcoin::key::Keypair;
 use bitcoin::opcodes::all::{
     OP_BOOLOR, OP_CHECKSIG, OP_CHECKSIGADD, OP_CSV, OP_DROP, OP_EQUAL, OP_SHA256, OP_SWAP,
     OP_VERIFY,
 };
-use bitcoin::secp256k1::Secp256k1;
+use bitcoin::secp256k1::{Secp256k1, SecretKey};
 use bitcoin::taproot::TaprootBuilder;
 use bitcoin::{script, secp256k1, Address, Network, ScriptBuf};
+use std::collections::HashMap;
 
 pub fn generate_bit_commitment_address(
     pubkey: secp256k1::XOnlyPublicKey,
@@ -96,14 +101,6 @@ pub fn template_last_script(xonlybubkey: secp256k1::XOnlyPublicKey) -> Vec<u8> {
 
 #[test]
 fn test_bit_commitment_tx() {
-    use crate::circuits::{
-        generate_bit_commitments, generate_bit_subsequent_commitments, make_bristol_array,
-        set_operations_array,
-    };
-    use std::collections::HashMap;
-    use bitcoin::key::Keypair;
-    use bitcoin::secp256k1::SecretKey;
-    
     let circuit = "4 7
 1 3
 1 1
@@ -138,6 +135,7 @@ fn test_bit_commitment_tx() {
         &wire_settings,
         &mut initial_commitment_preimages,
         &mut initial_commitment_hashes,
+        vec![0, 2, 3],
     );
     println!(
         "initial_commitment_preimages {:?}",

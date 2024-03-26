@@ -6,19 +6,19 @@ mod timelock;
 pub mod utils;
 mod verificationtx;
 
+use crate::circuits::{
+    generate_bit_commitments, generate_bit_subsequent_commitments, make_bristol_array,
+    set_operations_array,
+};
+use bitcoin::secp256k1::{Keypair, Secp256k1, SecretKey};
+use bitcoin::Network;
+use std::collections::HashMap;
+
 pub use bitcommitmenttx::generate_bit_commitment_address;
 pub use verificationtx::generate_verification_address;
 
 #[test]
 fn test_savm_taproot_tx_creation() {
-    use crate::circuits::{
-        generate_bit_commitments, generate_bit_subsequent_commitments, make_bristol_array,
-        set_operations_array,
-    };
-    use bitcoin::secp256k1::{Keypair, Secp256k1, SecretKey};
-    use bitcoin::Network;
-    use std::collections::HashMap;
-    
     let circuit = "4 7
 1 3
 1 1
@@ -48,6 +48,7 @@ fn test_savm_taproot_tx_creation() {
         &wire_settings,
         &mut initial_commitment_preimages,
         &mut initial_commitment_hashes,
+        vec![0, 2, 3],
     );
 
     let mut subsequent_commitment_preimages: Vec<Vec<String>> = Vec::new();
